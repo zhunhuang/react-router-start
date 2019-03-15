@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import './App.css';
 
-function Index () {
-  return <h2>welcome home</h2>;
+function Index ({ name }) {
+  return <h2>welcome home, dear {name}. </h2>;
 }
 
 function About () {
@@ -17,6 +17,7 @@ function Users () {
 
 class App extends Component {
   render () {
+    const name = 'nolan';
     return (
       <Router>
         <div>
@@ -31,8 +32,11 @@ class App extends Component {
               <Link to="/users">user info</Link>
             </li>
           </ul>
-          <Route exact path='/' component={Index}/>
-          <Route path='/about' component={About}/>
+          <Route exact path='/' render={() => <Index name={name}/>}/>
+          <Route path='/about' render={(props) => {
+            console.log(props);
+            return <About {...props}/>;
+          }}/>
           <Route path='/users' component={Users}/>
         </div>
       </Router>
